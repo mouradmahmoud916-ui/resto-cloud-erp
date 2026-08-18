@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="category_restaurant_costing" model="ir.module.category">
+            <field name="name">إدارة تكاليف المطاعم</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_restaurant_user" model="res.groups">
+            <field name="name">مستخدم التكاليف</field>
+            <field name="category_id" ref="category_restaurant_costing"/>
+        </record>
+
+        <record id="group_restaurant_manager" model="res.groups">
+            <field name="name">مدير التكاليف والمحاسبة</field>
+            <field name="category_id" ref="category_restaurant_costing"/>
+            <field name="implied_ids" eval="[(4, ref('group_restaurant_user'))]"/>
+        </record>
+    </data>
+</odoo>
