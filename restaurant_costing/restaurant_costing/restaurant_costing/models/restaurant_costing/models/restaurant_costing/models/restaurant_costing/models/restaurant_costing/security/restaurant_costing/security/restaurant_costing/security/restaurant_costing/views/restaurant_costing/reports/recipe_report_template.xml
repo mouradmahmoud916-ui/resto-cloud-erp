@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_restaurant_recipe" model="ir.actions.report">
+            <field name="name">طباعة بطاقة التكلفة</field>
+            <field name="model">restaurant.recipe</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">restaurant_costing.report_recipe_template</field>
+            <field name="report_file">restaurant_costing.report_recipe_template</field>
+            <field name="binding_model_id" ref="model_restaurant_recipe"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_recipe_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>بطاقة تكلفة الوجبة: <span t-field="doc.name"/></h2>
+                            <div class="row mt32 mb32">
+                                <div class="col-6">
+                                    <strong>سعر البيع: </strong> <span t-field="doc.sale_price"/><br/>
+                                    <strong>إجمالي التكلفة: </strong> <span t-field="doc.total_cost"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>نسبة التكلفة %: </strong> <span t-field="doc.food_cost_percentage"/>%
+                                </div>
+                            </div>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>المادة الخام</th>
+                                        <th>الكمية</th>
+                                        <th>تكلفة الوحدة</th>
+                                        <th>الإجمالي</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.line_ids" t-as="line">
+                                        <td><span t-field="line.ingredient_id.name"/></td>
+                                        <td><span t-field="line.quantity"/></td>
+                                        <td><span t-field="line.unit_cost"/></td>
+                                        <td><span t-field="line.subtotal_cost"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
