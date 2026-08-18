@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_restaurant_recipe_form" model="ir.ui.view">
+            <field name="name">restaurant.recipe.form</field>
+            <field name="model">restaurant.recipe</field>
+            <field name="arch" type="xml">
+                <form string="بطاقة تكلفة الوجبة">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="sale_price"/>
+                            </group>
+                            <group>
+                                <field name="total_cost"/>
+                                <field name="food_cost_percentage" widget="progressbar"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="المكونات">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="ingredient_id"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="unit_cost"/>
+                                        <field name="subtotal_cost"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_restaurant_recipe_tree" model="ir.ui.view">
+            <field name="name">restaurant.recipe.tree</field>
+            <field name="model">restaurant.recipe</field>
+            <field name="arch" type="xml">
+                <tree string="بطاقات التكلفة">
+                    <field name="name"/>
+                    <field name="sale_price"/>
+                    <field name="total_cost"/>
+                    <field name="food_cost_percentage"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_restaurant_recipe" model="ir.actions.act_window">
+            <field name="name">تكاليف الوجبات</field>
+            <field name="res_model">restaurant.recipe</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menus -->
+        <menuitem id="menu_restaurant_costing_root" name="تكاليف المطاعم" sequence="10"/>
+        <menuitem id="menu_restaurant_recipe" name="بطاقات التكلفة" parent="menu_restaurant_costing_root" action="action_restaurant_recipe" sequence="1"/>
+    </data>
+</odoo>
